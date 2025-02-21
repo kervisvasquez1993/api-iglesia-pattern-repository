@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers\Api\Pages;
 
+use App\DTOs\Pages\PagesDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Page\CreatePageRequest;
+use App\Services\Pages\PagesServices;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
+
+    protected $pagesServices;
+    public function __construct(PagesServices $pagesServices)
+    {
+        $this->pagesServices = $pagesServices;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -18,7 +27,17 @@ class PagesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(CreatePageRequest $request)
+    {
+
+        $result = $this->pagesServices->create(PagesDTO::fromRequest($request));
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 201);
+    }
 
     /**
      * Display the specified resource.
