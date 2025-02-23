@@ -15,6 +15,22 @@ class PagesServices
     {
         $this->pagesRepository = $pagesRepository;
     }
+
+    public function showAllPages()
+    {
+        try {
+            $pages = $this->pagesRepository->getAllPages();
+            return [
+                'success' => true,
+                'data' =>  $pages
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
     public function create($data)
     {
         try {

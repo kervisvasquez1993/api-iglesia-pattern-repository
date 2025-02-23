@@ -21,7 +21,8 @@ class PagesController extends Controller
      */
     public function index()
     {
-        //
+        $pages = $this->pagesServices->showAllPages();
+        return response()->json($pages);
     }
 
     /**

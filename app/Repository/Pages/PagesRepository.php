@@ -2,25 +2,42 @@
 
 namespace App\Repository\Pages;
 
+use App\DTOs\Pages\PagesDTO;
 use App\Interfaces\Pages\IPageInterface;
 use App\Models\Page;
 
 class PagesRepository implements IPageInterface
 {
 
-    public function createPage(\App\DTOs\Pages\PagesDTO $pagesDTO,)
+    public function getAllPages()
+    {
+        return Page::all();
+    }
+
+    public function findBySlug($pagesDTO)
+    {
+        return Page::where('slug', $pagesDTO->getSlug())->first();
+    }
+
+    public function createPage(PagesDTO $pagesDTO,)
     {
         return  Page::create([
             'name' => $pagesDTO->getName(),
             'slug' => $pagesDTO->getSlug(),
             'description' => $pagesDTO->getDescription()
         ]);
-        // return $page;
-
-        // return new \App\DTOs\Pages\PagesDTO(
-        //     $page->name,
-        //     $page->slug,
-        //     $page->description
-        // );
+    }
+    public function updatePage(Page $page, PagesDTO $pageDTO)
+    {
+        $page->update([
+            "name" => $pageDTO->getName(),
+            "description" => $pageDTO->getDescription()
+        ]);
+        return $page;
+    }
+    public function deletePage(Page $page)
+    {
+        $page->delete();
+        return $page;
     }
 }
