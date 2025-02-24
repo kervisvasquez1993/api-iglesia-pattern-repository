@@ -8,8 +8,8 @@ use App\Models\Page;
 interface IPageInterface
 {
     public function getAllPages();
-    public function findBySlug(PagesDTO $page);
+    public function findBySlug(string $page);
     public function createPage(PagesDTO $pagesDTO);
-    public function updatePage(Page $page, PagesDTO $pagesDTO);
-    public function deletePage(Page $page);
+    public function updatePage(string $page, PagesDTO $pagesDTO);
+    public function deletePage(string $page);
 }

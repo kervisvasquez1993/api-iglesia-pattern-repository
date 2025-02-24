@@ -14,11 +14,10 @@ class PagesRepository implements IPageInterface
         return Page::all();
     }
 
-    public function findBySlug($pagesDTO)
+    public function findBySlug(string $slug)
     {
-        return Page::where('slug', $pagesDTO->getSlug())->first();
+        return Page::where('slug', $slug)->firstOrFail();
     }
-
     public function createPage(PagesDTO $pagesDTO,)
     {
         return  Page::create([

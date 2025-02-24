@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Pages;
 use App\DTOs\Pages\PagesDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Page\CreatePageRequest;
+use App\Models\Page;
 use App\Services\Pages\PagesServices;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class PagesController extends Controller
     public function index()
     {
         $pages = $this->pagesServices->showAllPages();
-        return response()->json($pages);
+        return response()->json($pages['data'], status: 200);
     }
 
     /**
@@ -43,9 +44,15 @@ class PagesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $page)
     {
-        //
+        $result = $this->pagesServices->showOne($page);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 201);
     }
 
     /**

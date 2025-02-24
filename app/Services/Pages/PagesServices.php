@@ -47,4 +47,20 @@ class PagesServices
             ];
         }
     }
+
+    public function showOne($page)
+    {
+        try {
+            $pages = $this->pagesRepository->findBySlug($page);
+            return [
+                'success' => true,
+                'data' =>  $pages
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
 }
