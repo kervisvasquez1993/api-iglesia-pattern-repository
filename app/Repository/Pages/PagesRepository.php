@@ -26,17 +26,17 @@ class PagesRepository implements IPageInterface
             'description' => $pagesDTO->getDescription()
         ]);
     }
-    public function updatePage(Page $page, PagesDTO $pageDTO)
-    {
-        $page->update([
-            "name" => $pageDTO->getName(),
-            "description" => $pageDTO->getDescription()
-        ]);
-        return $page;
-    }
-    public function deletePage(Page $page)
-    {
-        $page->delete();
-        return $page;
-    }
+    // public function updatePage(Page $page, PagesDTO $pageDTO)
+    // {
+    //     $page->update([
+    //         "name" => $pageDTO->getName(),
+    //         "description" => $pageDTO->getDescription()
+    //     ]);
+    //     return $page;
+    // }
+    // public function deletePage(Page $page)
+    // {
+    //     $page->delete();
+    //     return $page;
+    // }
 }

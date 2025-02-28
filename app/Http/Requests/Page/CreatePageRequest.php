@@ -26,7 +26,7 @@ class CreatePageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:pages',
+            'name' => 'required|string|max:20|unique:pages',
             'description' => 'required|string|max:255'
         ];
     }
