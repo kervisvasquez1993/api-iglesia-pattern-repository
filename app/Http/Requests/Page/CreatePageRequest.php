@@ -14,7 +14,7 @@ class CreatePageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+
         return Auth::check() && Auth::user()->role === 'admin';
     }
 
