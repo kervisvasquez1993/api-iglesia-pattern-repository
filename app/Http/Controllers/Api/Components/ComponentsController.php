@@ -33,13 +33,12 @@ class ComponentsController extends Controller
 
 
         $result = $this->componentsServices->create(DTOsComponents::fromRequest($request));
-        // $result = $this->pagesServices->create(PagesDTO::fromRequest($request));
-        // if (!$result['success']) {
-        //     return response()->json([
-        //         'error' => $result['message']
-        //     ], 422);
-        // }
-        // return response()->json($result['data'], status: 201);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 201);
     }
 
     /**

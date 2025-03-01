@@ -1,13 +1,19 @@
 <?php
 
+use App\DTOs\Components\DTOsComponents;
 use App\Interfaces\Components\IComponentsRepository;
+use App\Models\Component;
 
 class ComponentsRespository implements IComponentsRepository
 {
 
-    public function create(array $data)
+    public function create(DTOsComponents $data)
     {
-        // Implementation here
+        $data = Component::create([
+            "name" => $data->getName(),
+            "type" => $data->getType(),
+            "config" => $data->getConfig(),
+        ]);
     }
 
     public function findById($id)

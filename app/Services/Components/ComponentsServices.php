@@ -6,14 +6,16 @@ use App\DTOs\Components\DTOsComponents;
 use App\Http\Requests\Components\CreateComponentsRequest;
 use App\Interfaces\Components\IComponentsServices;
 use App\Interfaces\Components\IComponentsRepository;
+use ComponentsRespository;
+use Exception;
 
 class ComponentsServices implements IComponentsServices
 {
-    protected IComponentsRepository $IComponentsRepository;
+    protected ComponentsRespository $ComponentsRepository;
 
-    public function __construct(IComponentsRepository $IComponentsRepository)
+    public function __construct(ComponentsRespository $ComponentsRepository)
     {
-        $this->IComponentsRepository = $IComponentsRepository;
+        $this->ComponentsRepository = $ComponentsRepository;
     }
     public function findByName($name)
     {
@@ -21,6 +23,19 @@ class ComponentsServices implements IComponentsServices
     }
     public function create(DTOsComponents $data)
     {
-        return $data;
+
+        try {
+
+            $result = $this->ComponentsRepository->create($data);
+            return [
+                'success' => true,
+                'data' =>  $result
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 }

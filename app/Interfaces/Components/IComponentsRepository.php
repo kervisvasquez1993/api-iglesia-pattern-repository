@@ -2,10 +2,12 @@
 
 namespace App\Interfaces\Components;
 
+use App\DTOs\Components\DTOsComponents;
+
 interface IComponentsRepository
 {
     public function findById($id);
     public function findByName($name);
 
-    public function create(array $data);
+    public function create(DTOsComponents $data);
 }
