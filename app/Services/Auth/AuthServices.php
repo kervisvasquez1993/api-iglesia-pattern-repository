@@ -2,18 +2,13 @@
 
 namespace App\Services\Auth;
 
-use App\DTOs\DTOsLogin;
-use App\DTOs\DTOsRegister;
-use App\DTOs\LoginDTO;
-use App\DTOs\RegisterDTO;
-use App\Interface\Auth\AuthRepositoryInterface;
+
+use App\DTOs\Auth\DTOsLogin;
+use App\DTOs\Auth\DTOsRegister;
 use App\Interfaces\Auth\IAuthRepository;
-use App\Models\User;
+
 use Exception;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+
 
 class AuthServices
 {

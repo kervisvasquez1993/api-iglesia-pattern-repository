@@ -2,8 +2,9 @@
 
 namespace App\Repository\Auth;
 
-use App\DTOs\DTOsLogin;
-use App\DTOs\DTOsRegister;
+
+use App\DTOs\Auth\DTOsLogin;
+use App\DTOs\Auth\DTOsRegister;
 use App\Interfaces\Auth\IAuthRepository;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;

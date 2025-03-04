@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs;
+namespace App\DTOs\Auth;
 
 use App\Http\Requests\Auth\RegisterRequest;
 
