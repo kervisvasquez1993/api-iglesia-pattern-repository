@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Auth\IAuthRepository;
 use App\Interfaces\Components\IComponentsRepository;
 use App\Interfaces\Components\IComponentsServices;
 use App\Interfaces\Pages\IPageInterface;
+use App\Repository\Auth\AuthRepository;
 use App\Repository\Pages\PagesRepository;
 use App\Services\Components\ComponentsServices;
 use App\Services\Pages\PagesServices;
@@ -21,6 +23,7 @@ class RepositoriesServicesProvider extends ServiceProvider
         // Repository
         $this->app->bind(IPageInterface::class, PagesRepository::class);
         $this->app->bind(IComponentsRepository::class, PagesRepository::class);
+        $this->app->bind(IAuthRepository::class, AuthRepository::class);
         // Services
         $this->app->bind(IComponentsServices::class, ComponentsServices::class);
     }
