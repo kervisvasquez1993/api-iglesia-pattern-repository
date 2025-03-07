@@ -3,6 +3,7 @@
 namespace App\DTOs\CategoryBlog;
 
 use App\Http\Requests\CategoryBlog\CreateCategoryBlogRequest;
+use App\Http\Requests\CategoryBlog\UpdateCategoryBlogRequest;
 use App\Http\Requests\Page\CreatePageRequest;
 use App\Http\Requests\Page\UpdatePageRequest;
 use Illuminate\Support\Str;
@@ -31,7 +32,7 @@ class DTOsCategoryBlog
         );
     }
 
-    public static function fromUpdateRequest(UpdatePageRequest $request): self
+    public static function fromUpdateRequest(UpdateCategoryBlogRequest $request): self
     {
         $validated = $request->validated();
         return new self(

@@ -23,9 +23,9 @@ Route::post('components', [ComponentsController::class, 'store'])->name('createC
 
 Route::post('category-blog', [CategoryBlogController::class, 'store'])->name('createCategoryBlog')->middleware('auth:api');
 Route::get('category-blog', [CategoryBlogController::class, 'index'])->name('showAllCategoryBlog');
-Route::get('category-blog/{categoryBlog}', [CategoryBlogController::class, 'show'])->name('showOneCategoryBlog');
-Route::put('category-blog/{categoryBlog}', [CategoryBlogController::class, 'update'])->name('updateCategoryBlog')->middleware('auth:api');
-Route::delete('category-blog/{categoryBlog}', [CategoryBlogController::class, 'destroy'])->name('deleteCategoryBlog')->middleware('auth:api');
+Route::get('category-blog/{id}', [CategoryBlogController::class, 'show'])->name('showOneCategoryBlog');
+Route::put('category-blog/{id}', [CategoryBlogController::class, 'update'])->name('updateCategoryBlog')->middleware('auth:api');
+Route::delete('category-blog/{id}', [CategoryBlogController::class, 'destroy'])->name('deleteCategoryBlog')->middleware('auth:api');
 
 // Route::get('/user', function (Request $request): mixed {
 //     return $request->user();

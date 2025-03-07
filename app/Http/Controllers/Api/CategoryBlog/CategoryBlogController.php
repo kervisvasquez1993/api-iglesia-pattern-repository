@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\CategoryBlog;
 use App\DTOs\CategoryBlog\DTOsCategoryBlog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryBlog\CreateCategoryBlogRequest;
+use App\Http\Requests\CategoryBlog\UpdateCategoryBlogRequest;
 use App\Services\CategoryBlog\CategoryBlogServices;
 use Illuminate\Http\Request;
 
@@ -49,9 +50,15 @@ class CategoryBlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryBlogRequest $request, string $id)
     {
-        //
+        $result = $this->categoryBlogServices->updateCategoryBlog(DTOsCategoryBlog::fromUpdateRequest($request), $id);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 201);
     }
 
     /**

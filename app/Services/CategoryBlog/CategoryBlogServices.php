@@ -23,7 +23,18 @@ class CategoryBlogServices implements ICategoyBlogServices
 
     public function getCategoryBlogById($id)
     {
-        return 'Get category blog by id';
+        try {
+            $results = $this->categoryBlogRepository->getCategoryBlogById($id);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 
     public function createCategoryBlog(DTOsCategoryBlog $data)
@@ -44,8 +55,34 @@ class CategoryBlogServices implements ICategoyBlogServices
 
     public function updateCategoryBlog(DTOsCategoryBlog $data, $id)
     {
-        return 'Update category blog';
+        try {
+            $CategoryBlog = $this->categoryBlogRepository->getCategoryBlogById($id);
+            $results = $this->categoryBlogRepository->updateCategoryBlog($data, $CategoryBlog);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
+    // public function updateQuiz(QuizDTO $quizDTO, $id)
+    // {
+    //     try {
+    //         $quiz = $this->quizRepository->getQuizById($id);
+    //         $updatedQuiz = $this->quizRepository->updateQuiz($quiz, $quizDTO);
+    //         return ['success' => true, "data" => $updatedQuiz, 'message' => 'Record updated successfully'];
+    //     } catch (\Exception $exception) {
+    //         error_log($exception);
+    //         return [
+    //             'success' => false,
+    //             'message' => $exception->getMessage()
+    //         ];
+    //     }
+    // }
 
     public function deleteCategoryBlog($id)
     {

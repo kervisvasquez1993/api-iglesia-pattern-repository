@@ -6,7 +6,8 @@ use App\DTOs\CategoryBlog\DTOsCategoryBlog;
 use App\Interfaces\CategoryBlog\ICategoyBlogRepository;
 use App\Models\CategoryBlog;
 
-class CategoryBlogRepository implements ICategoyBlogRepository{
+class CategoryBlogRepository implements ICategoyBlogRepository
+{
     public function getAllCategoryBlog()
     {
         return 'Get all category blog';
@@ -14,10 +15,14 @@ class CategoryBlogRepository implements ICategoyBlogRepository{
 
     public function getCategoryBlogById($id)
     {
-        return 'Get category blog by id';
+        $categoryBlog = CategoryBlog::find($id);
+        if (!$categoryBlog) {
+            throw new \Exception("No results found for Quiz with ID {$id}");
+        }
+        return $categoryBlog;
     }
 
-    public function createCategoryBlog( DTOsCategoryBlog $data)
+    public function createCategoryBlog(DTOsCategoryBlog $data)
     {
         $data = CategoryBlog::create([
             'name' => $data->getName(),
@@ -27,9 +32,14 @@ class CategoryBlogRepository implements ICategoyBlogRepository{
         return $data;
     }
 
-    public function updateCategoryBlog($data, $id)
+    public function updateCategoryBlog($data, $categoryBlog)
     {
-        return 'Update category blog';
+        $categoryBlog->update([
+            'name' => $data->getName(),
+            'slug' => $data->getSlug(),
+            'description' => $data->getDescription()
+        ]);
+        return $categoryBlog;
     }
 
     public function deleteCategoryBlog($id)
