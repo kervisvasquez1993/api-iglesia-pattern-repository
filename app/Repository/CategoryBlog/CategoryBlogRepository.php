@@ -10,14 +10,14 @@ class CategoryBlogRepository implements ICategoyBlogRepository
 {
     public function getAllCategoryBlog()
     {
-        return 'Get all category blog';
+        return CategoryBlog::all();
     }
 
     public function getCategoryBlogById($id)
     {
         $categoryBlog = CategoryBlog::find($id);
         if (!$categoryBlog) {
-            throw new \Exception("No results found for Quiz with ID {$id}");
+            throw new \Exception("No results found for Category with ID {$id}");
         }
         return $categoryBlog;
     }
@@ -42,8 +42,9 @@ class CategoryBlogRepository implements ICategoyBlogRepository
         return $categoryBlog;
     }
 
-    public function deleteCategoryBlog($id)
+    public function deleteCategoryBlog($categoryBlog)
     {
-        return 'Delete category blog';
+        $categoryBlog->delete();
+        return $categoryBlog;
     }
 }

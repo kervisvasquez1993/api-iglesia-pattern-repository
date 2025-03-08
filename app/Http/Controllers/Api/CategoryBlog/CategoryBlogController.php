@@ -22,7 +22,13 @@ class CategoryBlogController extends Controller
      */
     public function index()
     {
-        //
+        $result = $this->categoryBlogServices->getAllCategoryBlog();
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 200);
     }
 
     /**
@@ -44,7 +50,13 @@ class CategoryBlogController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $result = $this->categoryBlogServices->getCategoryBlogById($id);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 200);
     }
 
     /**
@@ -66,6 +78,12 @@ class CategoryBlogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = $this->categoryBlogServices->deleteCategoryBlog($id);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 200);
     }
 }

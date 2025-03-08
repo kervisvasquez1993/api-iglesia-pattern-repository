@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class AuthRepository implements IAuthRepository
 {
 
@@ -44,4 +45,5 @@ class AuthRepository implements IAuthRepository
             'role' => $registerDTO->getRole()
         ]);
     }
+    
 }

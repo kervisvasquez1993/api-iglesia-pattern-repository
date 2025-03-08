@@ -6,6 +6,8 @@ namespace App\Services\Auth;
 use App\DTOs\Auth\DTOsLogin;
 use App\DTOs\Auth\DTOsRegister;
 use App\Interfaces\Auth\IAuthRepository;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 use Exception;
 
@@ -63,6 +65,13 @@ class AuthServices
                 'message' => $exception->getMessage(),
                 'code' => "442"
             ];
+        }
+    }
+
+    public function validateRole()
+    {
+        if (!Gate::allows('validate-role', Auth::user())) {
+            throw new \Exception("You do not have permission to perform this action.");
         }
     }
 }

@@ -3,22 +3,38 @@
 namespace App\Services\CategoryBlog;
 
 use App\DTOs\CategoryBlog\DTOsCategoryBlog;
+use App\Interfaces\Auth\IAuthRepository;
 use App\Interfaces\CategoryBlog\ICategoyBlogServices;
 use App\Repository\CategoryBlog\CategoryBlogRepository;
+use App\Services\Auth\AuthServices;
 use Exception;
 
 class CategoryBlogServices implements ICategoyBlogServices
 {
     protected $categoryBlogRepository;
 
-    public function __construct(CategoryBlogRepository $categoryBlogRepository)
+    protected $authRepository;
+
+    public function __construct(CategoryBlogRepository $categoryBlogRepository, AuthServices $authRepository)
     {
         $this->categoryBlogRepository = $categoryBlogRepository;
+        $this->authRepository = $authRepository;
     }
 
     public function getAllCategoryBlog()
     {
-        return 'Get all category blog';
+        try {
+            $results = $this->categoryBlogRepository->getAllCategoryBlog();
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 
     public function getCategoryBlogById($id)
@@ -86,6 +102,20 @@ class CategoryBlogServices implements ICategoyBlogServices
 
     public function deleteCategoryBlog($id)
     {
-        return 'Delete category blog';
+
+        try {
+             $this->authRepository->validateRole();
+            $CategoryBlog = $this->categoryBlogRepository->getCategoryBlogById($id);
+            $results = $this->categoryBlogRepository->deleteCategoryBlog($CategoryBlog);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 }

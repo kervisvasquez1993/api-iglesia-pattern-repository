@@ -11,5 +11,5 @@ interface ICategoyBlogRepository
     public function getCategoryBlogById($id);
     public function createCategoryBlog(DTOsCategoryBlog $data);
     public function updateCategoryBlog(DTOsCategoryBlog $data, CategoryBlog $categoryBlog);
-    public function deleteCategoryBlog($id);
+    public function deleteCategoryBlog(CategoryBlog $categoryBlog);
 }
