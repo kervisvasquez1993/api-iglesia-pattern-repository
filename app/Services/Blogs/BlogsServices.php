@@ -25,7 +25,18 @@ class BlogsServices implements IBlogServices
 
     public function getBlogById($id)
     {
-        // Implement getBlogById method
+        try {
+            $results = $this->blogRepository->getBlogById($id);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 
     public function createBlog(DTOsBlogs $data)

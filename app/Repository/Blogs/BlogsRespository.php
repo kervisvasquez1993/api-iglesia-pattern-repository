@@ -15,7 +15,11 @@ class BlogsRespository implements IBlogRespository
 
     public function getBlogById($id)
     {
-        // Implement getBlogById method
+        $blog = Blog::find($id);
+        if (!$blog) {
+            throw new \Exception("No results found for Blog with ID {$id}");
+        }
+        return $blog;
     }
 
     public function createBlog(DTOsBlogs $data)

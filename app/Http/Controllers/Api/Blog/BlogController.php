@@ -47,7 +47,13 @@ class BlogController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $result = $this->blogsServices->getBlogById($id);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 200);
     }
 
     /**
