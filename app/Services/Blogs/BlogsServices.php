@@ -1,6 +1,56 @@
-<?php 
+<?php
+
 namespace App\Services\Blogs;
 
-class BlogsServices{
-    
+use App\DTOs\Blogs\DTOsBlogs;
+use App\Interfaces\Blog\IBlogServices;
+use App\Repository\Blogs\BlogsRespository;
+use Exception;
+
+
+class BlogsServices implements IBlogServices
+{
+
+    protected  BlogsRespository $blogRepository;
+
+
+    public function __construct(BlogsRespository $blogRepository)
+    {
+        $this->blogRepository = $blogRepository;
+    }
+    public function getBlog()
+    {
+        // Implement getBlog method
+    }
+
+    public function getBlogById($id)
+    {
+        // Implement getBlogById method
+    }
+
+    public function createBlog(DTOsBlogs $data)
+    {
+        try {
+            $results = $this->blogRepository->createBlog($data);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
+
+    public function updateBlog($data, $id)
+    {
+        // Implement updateBlog method
+    }
+
+    public function deleteBlog($id)
+    {
+        // Implement deleteBlog method
+    }
 }

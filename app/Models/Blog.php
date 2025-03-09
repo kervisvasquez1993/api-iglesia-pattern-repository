@@ -9,7 +9,7 @@ class Blog extends Model
 {
     use SoftDeletes;
     protected $table = 'blogs';
-    protected $fillable = ['title', 'slug', 'description', 'content', 'image', 'category_id', 'status', 'created_by', 'updated_by'];
+    protected $fillable = ['title', 'slug', 'description', 'content', 'image', 'category_id', 'status'];
 
     public function category()
     {

@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers\Api\Blog;
 
+use App\DTOs\Blogs\DTOsBlogs;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Blog\CreateBlogRequest;
+use App\Services\Blogs\BlogsServices;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
+
+    
+    protected BlogsServices $blogsServices;
+
+    public function __construct(BlogsServices $blogsServices)
+    {
+        $this->blogsServices = $blogsServices;
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -18,9 +30,16 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateBlogRequest $request)
     {
-        //
+
+        $result = $this->blogsServices->createBlog(DTOsBlogs::fromRequest($request));
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 201);
     }
 
     /**
