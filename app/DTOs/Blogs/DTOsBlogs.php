@@ -68,7 +68,7 @@ class DTOsBlogs
         return new self(
             name: $validated['title'],
             description: $validated['description'],
-            image: $validated['image'],
+            image: '',
             status: $validated['status'],
             slug: $validated['slug'],
             content: $validated['content'],

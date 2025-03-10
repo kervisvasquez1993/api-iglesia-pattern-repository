@@ -10,23 +10,23 @@ class BlogsRespository implements IBlogRespository
 {
     public function getBlog()
     {
-        // Implement getBlog method
+        $blogs = Blog::all();
+        return $blogs;
     }
 
-    public function getBlogById($id)
+    public function getBlogById($id): Blog
     {
-        $blog = Blog::find($id);
+        $blog = Blog::where('id', $id)->first();
         if (!$blog) {
             throw new \Exception("No results found for Blog with ID {$id}");
         }
         return $blog;
     }
 
-    public function createBlog(DTOsBlogs $data)
+    public function createBlog(DTOsBlogs $data): Blog
     {
         $result = Blog::create([
             'title' => $data->getName(),
-            'slug' => $data->getSlug(),
             'description' => $data->getDescription(),
             'image' => $data->getImage(),
             'content' => $data->getContent(),
@@ -38,13 +38,22 @@ class BlogsRespository implements IBlogRespository
 
 
 
-    public function updateBlog($data, $id)
+    public function updateBlog(DTOsBlogs $data, Blog $blog): Blog
     {
-        // Implement updateBlog method
+        $blog->update([
+            'title' => $data->getName(),
+            'slug' => $data->getSlug(),
+            'description' => $data->getDescription(),
+            'content' => $data->getContent(),
+            'category_id' => $data->getCategoryId(),
+            'user_id' => $data->getUserId(),
+        ]);
+        return $blog;
     }
 
-    public function deleteBlog($id)
+    public function deleteBlog(Blog $blog): Blog
     {
-        // Implement deleteBlog method
+        $blog->delete();
+        return $blog;
     }
 }

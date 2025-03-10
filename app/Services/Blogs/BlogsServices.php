@@ -20,7 +20,18 @@ class BlogsServices implements IBlogServices
     }
     public function getBlog()
     {
-        // Implement getBlog method
+        try {
+            $results = $this->blogRepository->getBlog();
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 
     public function getBlogById($id)
@@ -55,13 +66,37 @@ class BlogsServices implements IBlogServices
         }
     }
 
-    public function updateBlog($data, $id)
+    public function updateBlog(DTOsBlogs $data, $id)
     {
-        // Implement updateBlog method
+        try {
+            $blog = $this->blogRepository->getBlogById($id);
+            $results = $this->blogRepository->updateBlog($data, $blog);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 
     public function deleteBlog($id)
     {
-        // Implement deleteBlog method
+        try {
+            $blog = $this->blogRepository->getBlogById($id);
+            $results = $this->blogRepository->deleteBlog($blog);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
     }
 }
