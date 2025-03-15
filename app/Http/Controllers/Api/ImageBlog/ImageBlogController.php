@@ -66,6 +66,12 @@ class ImageBlogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = $this->imagesBlogServices->deletedImageBlog($id);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 200);
     }
 }

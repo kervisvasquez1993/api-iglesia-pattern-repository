@@ -6,6 +6,7 @@ use App\DTOs\ImagesBlog\DTOsImagesBlog;
 use App\Http\Requests\ImagesBlog\IndexImageBlogRequest;
 use App\Interfaces\ImagesBlog\IImagesBlogServices;
 use App\Repository\ImagesBlog\ImagesBlogRepository;
+use App\Services\Auth\AuthServices;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,12 @@ class ImagesBlogServices implements IImagesBlogServices
 {
 
     protected ImagesBlogRepository $imagesBlogRepository;
+    protected $authRepository;
 
-    public function __construct(ImagesBlogRepository $imagesBlogRepository)
+    public function __construct(ImagesBlogRepository $imagesBlogRepository, AuthServices $authRepository)
     {
         $this->imagesBlogRepository = $imagesBlogRepository;
+        $this->authRepository = $authRepository;
     }
 
     public function indexImgsBlog(IndexImageBlogRequest $request)
@@ -41,9 +44,47 @@ class ImagesBlogServices implements IImagesBlogServices
     public function CreateImageBlog(DTOsImagesBlog $DTOsImagesBlog)
     {
         try {
-            // $results = $this->categoryBlogRepository->createCategoryBlog($data);
             $result = $this->imagesBlogRepository->CreateImagesBlog($DTOsImagesBlog);
 
+            return [
+                'success' => true,
+                'data' => $result,
+                'message' => 'Create Succeso'
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'data' => null,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
+
+    public function findImgBlog($id)
+    {
+        try {
+            $result = $this->imagesBlogRepository->findImgBlog($id);
+
+            return [
+                'success' => true,
+                'data' => $result,
+                'message' => 'Create Succeso'
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'data' => null,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
+
+    public function deletedImageBlog($id)
+    {
+        try {
+            $this->authRepository->validateRole();
+            $imgBlog = $this->imagesBlogRepository->findImgBlog($id);
+            $result = $this->imagesBlogRepository->deleteImgBlog($imgBlog);
             return [
                 'success' => true,
                 'data' => $result,

@@ -11,4 +11,7 @@ interface IImagesBlogServices
 
     public function indexImgsBlog(IndexImageBlogRequest $request);
     public function CreateImageBlog(DTOsImagesBlog $dTOsImagesBlog);
+
+    public function findImgBlog(string $id);
+    public function deletedImageBlog(string $id);
 }
