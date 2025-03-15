@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Blog\BlogController;
 use App\Http\Controllers\Api\CategoryBlog\CategoryBlogController;
 use App\Http\Controllers\Api\Component\ComponentsController;
+use App\Http\Controllers\Api\ImageBlog\ImageBlogController;
 use App\Http\Controllers\Api\Pages\PagesController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,12 @@ Route::get('blogs', [BlogController::class, 'index'])->name('showAllBlogs');
 Route::get('blogs/{id}', [BlogController::class, 'show'])->name('showOneBlog');
 Route::put('blogs/{id}', [BlogController::class, 'update'])->name('updateBlog')->middleware('auth:api');
 Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('deleteBlog')->middleware('auth:api');
+
+
+
+// imgBlogs
+
+Route::post('img-blogs', [ImageBlogController::class, 'store'])->name('createImgBlog')->middleware('auth:api');
 // Route::get('/user', function (Request $request): mixed {
 //     return $request->user();
 // })->middleware('auth:api');
