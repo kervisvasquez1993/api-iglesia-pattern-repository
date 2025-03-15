@@ -42,6 +42,7 @@ Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('deleteBlo
 // imgBlogs
 
 Route::post('img-blogs', [ImageBlogController::class, 'store'])->name('createImgBlog')->middleware('auth:api');
+Route::get('img-blogs', [ImageBlogController::class, 'index'])->name('indexImgBlog');
 // Route::get('/user', function (Request $request): mixed {
 //     return $request->user();
 // })->middleware('auth:api');

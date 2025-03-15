@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\ImageBlog;
 use App\DTOs\ImagesBlog\DTOsImagesBlog;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImagesBlog\CreateImageBlogRequest;
+use App\Http\Requests\ImagesBlog\IndexImageBlogRequest;
 use App\Services\ImagesBlog\ImagesBlogServices;
 use Illuminate\Http\Request;
 
@@ -12,15 +13,22 @@ class ImageBlogController extends Controller
 {
 
     protected ImagesBlogServices $imagesBlogServices;
-    public function __construct(ImagesBlogServices $imagesBlogServices){
+    public function __construct(ImagesBlogServices $imagesBlogServices)
+    {
         $this->imagesBlogServices = $imagesBlogServices;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexImageBlogRequest $request)
     {
-        //
+        $result = $this->imagesBlogServices->indexImgsBlog($request);
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        return response()->json($result['data'], status: 200);
     }
 
     /**
@@ -35,8 +43,6 @@ class ImageBlogController extends Controller
             ], 422);
         }
         return response()->json($result['data'], status: 200);
-
-
     }
 
     /**

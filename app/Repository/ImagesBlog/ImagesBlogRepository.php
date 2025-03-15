@@ -17,4 +17,15 @@ class ImagesBlogRepository implements IImagesBlogRepository
         ]);
         return $result;
     }
+
+    public function IndexImgBlog(array $filters)
+    {
+        $query = ImgBlog::query();
+
+        if (!empty($filters['blog_id'])) {
+            $query->where('blog_id', $filters['blog_id']);
+        }
+
+        return $query->get();
+    }
 }
