@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\Auth\AuthServices;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -58,6 +60,30 @@ class AuthController extends Controller
      * )
      */
 
+    public function me(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Token inválido o usuario no autenticado'
+            ], 401);
+        }
+
+        // Verificar si el token ha expirado
+        $token = $request->user()->token();
+        if ($token->expires_at->isPast()) {
+            return response()->json([
+                'message' => 'Token expirado',
+                'expired_at' => $token->expires_at
+            ], 401);
+        }
+
+        return response()->json([
+            'message' => 'Usuario autenticado',
+            'user' => $user
+        ]);
+    }
     public function login(LoginRequest $request)
     {
         $result = $this->authServices->login(DTOsLogin::fromRequest($request));
