@@ -31,6 +31,8 @@ class RepositoriesServicesProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(IEjemploTaskRepository::class, EjemploTaskRepository::class);
+        $this->app->bind(IEjemploTaskServices::class, EjemploTaskServices::class);
 
         // Repository
         $this->app->bind(IPageInterface::class, PagesRepository::class);

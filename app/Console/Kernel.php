@@ -11,7 +11,8 @@ class Kernel extends ConsoleKernel
      * Define los comandos de consola de la aplicación.
      */
     protected $commands = [
-        \App\Console\Commands\MakeDTO::class
+        \App\Console\Commands\MakeDTO::class,
+        \App\Console\Commands\CreateServicePattern::class,
     ];
 
     /**

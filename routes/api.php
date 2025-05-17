@@ -7,10 +7,6 @@ use App\Http\Controllers\Api\Component\ComponentsController;
 use App\Http\Controllers\Api\ImageBlog\ImageBlogController;
 use App\Http\Controllers\Api\Pages\PagesController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Http\Controllers\AccessTokenController;
-use Laravel\Passport\Http\Controllers\ClientController;
-use Laravel\Passport\Http\Controllers\PersonalAccessTokenController;
-use Laravel\Passport\Http\Controllers\ScopeController;
 
 
 // Route::post('/oauth/token', [AccessTokenController::class, 'issueToken'])
