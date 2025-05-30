@@ -23,18 +23,20 @@ class BlogsRespository implements IBlogRespository
         return $blog;
     }
 
-    public function createBlog(DTOsBlogs $data): Blog
-    {
-        $result = Blog::create([
-            'title' => $data->getName(),
-            'description' => $data->getDescription(),
-            'image' => $data->getImage(),
-            'content' => $data->getContent(),
-            'category_id' => $data->getCategoryId(),
-            'user_id' => $data->getUserId(),
-        ]);
-        return $result;
-    }
+ public function createBlog(DTOsBlogs $data): Blog
+{
+    $result = Blog::create([
+        'title' => $data->getName(),
+        'description' => $data->getDescription(),
+        'image' => $data->getImage(),
+        'content' => $data->getContent(),
+        'slug' => $data->getSlug(),          
+        'status' => $data->getStatus(),      
+        'category_id' => $data->getCategoryId(),
+        'user_id' => $data->getUserId(),
+    ]);
+    return $result;
+}
 
 
 

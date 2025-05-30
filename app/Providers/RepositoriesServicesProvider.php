@@ -9,17 +9,21 @@ use App\Interfaces\CategoryBlog\ICategoyBlogRepository;
 use App\Interfaces\CategoryBlog\ICategoyBlogServices;
 use App\Interfaces\Components\IComponentsRepository;
 use App\Interfaces\Components\IComponentsServices;
+use App\Interfaces\Evento\IEventoRepository;
+use App\Interfaces\Evento\IEventoServices;
 use App\Interfaces\ImagesBlog\IImagesBlogRepository;
 use App\Interfaces\ImagesBlog\IImagesBlogServices;
 use App\Interfaces\Pages\IPageInterface;
 use App\Repository\Auth\AuthRepository;
 use App\Repository\Blogs\BlogsRespository;
 use App\Repository\CategoryBlog\CategoryBlogRepository;
+use App\Repository\Evento\EventoRepository;
 use App\Repository\ImagesBlog\ImagesBlogRepository;
 use App\Repository\Pages\PagesRepository;
 use App\Services\Blogs\BlogsServices;
 use App\Services\CategoryBlog\CategoryBlogServices;
 use App\Services\Components\ComponentsServices;
+use App\Services\Evento\EventoServices;
 use App\Services\ImagesBlog\ImagesBlogServices;
 use App\Services\Pages\PagesServices;
 use Illuminate\Support\ServiceProvider;
@@ -31,8 +35,9 @@ class RepositoriesServicesProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(IEjemploTaskRepository::class, EjemploTaskRepository::class);
-        $this->app->bind(IEjemploTaskServices::class, EjemploTaskServices::class);
+        $this->app->bind(IEventoRepository::class, EventoRepository::class);
+        $this->app->bind(IEventoServices::class, EventoServices::class);
+
 
         // Repository
         $this->app->bind(IPageInterface::class, PagesRepository::class);
