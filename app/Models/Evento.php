@@ -12,8 +12,8 @@ class Evento extends Model
     protected $fillable = [
         'nome',
         'descricao',
+        'imagem',
         'data_inicio',
-        'data_fim',
         'localizacao',
         'status',
     ];

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 
-class CreateEventoRequest extends FormRequest 
+class CreateEventoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class CreateEventoRequest extends FormRequest
     {
         return Auth::check(); // Modify this according to your authorization logic
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,11 +25,15 @@ class CreateEventoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // Define your validation rules here
-            // 'field' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
+            'descricao' => 'nullable|string',
+            'imagem' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'data_inicio' => 'required|date',
+            'localizacao' => 'nullable|string|max:255',
+            'status' => 'nullable|in:ativo,inativo,cancelado,finalizado',
         ];
     }
-    
+
     /**
      * Handle a failed validation attempt.
      */
@@ -43,7 +47,7 @@ class CreateEventoRequest extends FormRequest
             422
         ));
     }
-    
+
     /**
      * Handle a failed authorization attempt.
      */
