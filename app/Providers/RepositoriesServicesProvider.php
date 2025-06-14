@@ -14,18 +14,22 @@ use App\Interfaces\Evento\IEventoServices;
 use App\Interfaces\ImagesBlog\IImagesBlogRepository;
 use App\Interfaces\ImagesBlog\IImagesBlogServices;
 use App\Interfaces\Pages\IPageInterface;
+use App\Interfaces\Sermones\ISermonesRepository;
+use App\Interfaces\Sermones\ISermonesServices;
 use App\Repository\Auth\AuthRepository;
 use App\Repository\Blogs\BlogsRespository;
 use App\Repository\CategoryBlog\CategoryBlogRepository;
 use App\Repository\Evento\EventoRepository;
 use App\Repository\ImagesBlog\ImagesBlogRepository;
 use App\Repository\Pages\PagesRepository;
+use App\Repository\Sermones\SermonesRepository;
 use App\Services\Blogs\BlogsServices;
 use App\Services\CategoryBlog\CategoryBlogServices;
 use App\Services\Components\ComponentsServices;
 use App\Services\Evento\EventoServices;
 use App\Services\ImagesBlog\ImagesBlogServices;
 use App\Services\Pages\PagesServices;
+use App\Services\Sermones\SermonesServices;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoriesServicesProvider extends ServiceProvider
@@ -35,6 +39,8 @@ class RepositoriesServicesProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(ISermonesRepository::class, SermonesRepository::class);
+        $this->app->bind(ISermonesServices::class, SermonesServices::class);
         $this->app->bind(IEventoRepository::class, EventoRepository::class);
         $this->app->bind(IEventoServices::class, EventoServices::class);
 

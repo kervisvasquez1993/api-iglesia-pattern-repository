@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Component\ComponentsController;
 use App\Http\Controllers\Api\Evento\EventoController;
 use App\Http\Controllers\Api\ImageBlog\ImageBlogController;
 use App\Http\Controllers\Api\Pages\PagesController;
+use App\Http\Controllers\Api\Sermones\SermonesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -62,7 +63,12 @@ Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('deleteBlo
 Route::post('eventos', [EventoController::class, 'store'])->name('crearEvento')->middleware('auth:api');
 Route::get('eventos', [EventoController::class, 'index'])->name('listEventos');
 
-
+Route::post('sermones', [SermonesController::class, 'store'])->name('sermones')->middleware('auth:api');
+Route::get('sermones', [SermonesController::class, 'index'])->name('getSermones')->middleware('auth:api');
+// Rutas que faltan
+Route::get('sermones/{id}', [SermonesController::class, 'show'])->name('getSermon')->middleware('auth:api');
+Route::put('sermones/{id}', [SermonesController::class, 'update'])->name('updateSermon')->middleware('auth:api');
+Route::delete('sermones/{id}', [SermonesController::class, 'destroy'])->name('deleteSermon')->middleware('auth:api');
 
 
 // imgBlogs
