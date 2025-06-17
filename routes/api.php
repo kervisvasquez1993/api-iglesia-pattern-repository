@@ -39,8 +39,6 @@ Route::get('pages/{page}', [PagesController::class, 'show'])->name('showOnePages
 Route::put('pages/{page}', [PagesController::class, 'update'])->name('updatePage')->middleware('auth:api');
 Route::delete('pages/{page}', [PagesController::class, 'destroy'])->name('deletePage')->middleware('auth:api');
 // components
-Route::post('components', [ComponentsController::class, 'store'])->name('createComponent')->middleware('auth:api');
-// Blogs
 
 
 // Category Blog
