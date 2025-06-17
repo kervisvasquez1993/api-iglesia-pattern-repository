@@ -53,9 +53,9 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        $result = $this->blogsServices->getBlogById($id);
+        $result = $this->blogsServices->getBlogBySlug($slug);
         if (!$result['success']) {
             return response()->json([
                 'error' => $result['message']

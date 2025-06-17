@@ -31,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(Carbon::now()->addMinutes(1)); // 🔹 Expira en 1 minuto
         Passport::refreshTokensExpireIn(Carbon::now()->addMinutes(2)); 
         Gate::define('validate-role', [AuthRolePolici::class, 'ValidateAdmin']);
+        Passport::loadKeysFrom(__DIR__ . '/../secrets/oauth');
     }
 }

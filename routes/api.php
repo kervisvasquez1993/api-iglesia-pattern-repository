@@ -55,7 +55,7 @@ Route::delete('category-blog/{id}', [CategoryBlogController::class, 'destroy'])-
 // Blogs
 Route::post('blogs', [BlogController::class, 'store'])->name('createBlog')->middleware('auth:api');
 Route::get('blogs', [BlogController::class, 'index'])->name('showAllBlogs');
-Route::get('blogs/{id}', [BlogController::class, 'show'])->name('showOneBlog');
+Route::get('blogs/{slug}', [BlogController::class, 'show'])->name('showOneBlog');
 Route::put('blogs/{id}', [BlogController::class, 'update'])->name('updateBlog')->middleware('auth:api');
 Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('deleteBlog')->middleware('auth:api');
 
@@ -64,7 +64,7 @@ Route::post('eventos', [EventoController::class, 'store'])->name('crearEvento')-
 Route::get('eventos', [EventoController::class, 'index'])->name('listEventos');
 
 Route::post('sermones', [SermonesController::class, 'store'])->name('sermones')->middleware('auth:api');
-Route::get('sermones', [SermonesController::class, 'index'])->name('getSermones')->middleware('auth:api');
+Route::get('sermones', [SermonesController::class, 'index'])->name('getSermones');
 // Rutas que faltan
 Route::get('sermones/{id}', [SermonesController::class, 'show'])->name('getSermon')->middleware('auth:api');
 Route::put('sermones/{id}', [SermonesController::class, 'update'])->name('updateSermon')->middleware('auth:api');

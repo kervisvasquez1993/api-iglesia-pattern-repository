@@ -49,6 +49,21 @@ class BlogsServices implements IBlogServices
             ];
         }
     }
+     public function getBlogBySlug($slug)
+    {
+        try {
+            $results = $this->blogRepository->getBlogBySlug($slug);
+            return [
+                'success' => true,
+                'data' => $results
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
 
     public function createBlog(DTOsBlogs $data)
     {

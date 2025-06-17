@@ -23,6 +23,14 @@ class BlogsRespository implements IBlogRespository
         return $blog;
     }
 
+    public function getBlogBySlug($slug): Blog
+    {
+        $blog = Blog::where('slug', $slug)->first();
+        if (!$blog) {
+            throw new \Exception("No results found for Blog with slug '{$slug}'");
+        }
+        return $blog;
+    }
  public function createBlog(DTOsBlogs $data): Blog
 {
     $result = Blog::create([
