@@ -1,4 +1,36 @@
 <?php
+if (!function_exists('expandKey')) {
+    function expandKey($compressedKey) {
+        if (!$compressedKey) return null;
+        
+        // Si ya tiene saltos de línea, devolverla tal como está
+        if (strpos($compressedKey, "\n") !== false) {
+            return $compressedKey;
+        }
+        
+        // Extraer header, body y footer
+        $patterns = [
+            'private' => '/^(-----BEGIN PRIVATE KEY-----)(.*)(-----END PRIVATE KEY-----)$/',
+            'public' => '/^(-----BEGIN PUBLIC KEY-----)(.*)(-----END PUBLIC KEY-----)$/',
+            'rsa' => '/^(-----BEGIN RSA PRIVATE KEY-----)(.*)(-----END RSA PRIVATE KEY-----)$/'
+        ];
+        
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $compressedKey, $matches)) {
+                $header = $matches[1];
+                $body = $matches[2];
+                $footer = $matches[3];
+                
+                // Dividir el body en chunks de 64 caracteres
+                $formattedBody = chunk_split($body, 64, "\n");
+                
+                return $header . "\n" . trim($formattedBody) . "\n" . $footer;
+            }
+        }
+        
+        return $compressedKey; // Si no coincide con ningún patrón, devolver original
+    }
+}
 
 return [
 
@@ -26,9 +58,8 @@ return [
     |
     */
 
-    'private_key' => env('PASSPORT_PRIVATE_KEY'),
-
-    'public_key' => env('PASSPORT_PUBLIC_KEY'),
+     'private_key' => expandKey(env('PASSPORT_PRIVATE_KEY')),
+    'public_key' => expandKey(env('PASSPORT_PUBLIC_KEY')),
 
     /*
     |--------------------------------------------------------------------------
