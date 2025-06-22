@@ -3,25 +3,31 @@
 namespace App\DTOs\Auth;
 
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User;
 
 class DTOsRegister
 {
     public function __construct(
-        private readonly string $username,
-        private readonly string $email,
-        private readonly string $password,
-        private readonly string $role = 'user'
-    ) {}
+    private readonly string $username,
+    private readonly string $email,
+    private readonly string $password,
+    private readonly string $role = 'user',
+    private readonly ?string $adminToken = null
+) {}
 
-    public static function fromRequest(RegisterRequest $request): self
+
+    public static function fromRequest(RegisterRequest $request, bool $isAdminRegistration = false): self
     {
         return new self(
             username: $request->validated('username'),
             email: $request->validated('email'),
             password: $request->validated('password'),
-            role: 'user'
+            role: $isAdminRegistration ? 'admin' : 'user',
+            adminToken: $request->validated('admin_token') ?? null
         );
     }
+
+
 
     public function toArray(): array
     {
@@ -52,4 +58,9 @@ class DTOsRegister
     {
         return $this->role;
     }
+    public function getAdminToken(): ?string
+{
+    return $this->adminToken;
+}
+
 }

@@ -6,6 +6,8 @@ namespace App\Services\Auth;
 use App\DTOs\Auth\DTOsLogin;
 use App\DTOs\Auth\DTOsRegister;
 use App\Interfaces\Auth\IAuthRepository;
+use App\Models\AdminToken;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,24 +52,48 @@ class AuthServices
         }
     }
 
-    public function register(DTOsRegister $registerDTO)
-    {
-        try {
-            $user = $this->authRepository->createUser($registerDTO);
-            return [
-                'success' => true,
-                'data' =>  $user,
-                'error' => "test"
-            ];
-        } catch (Exception $exception) {
-            return [
-                'success' => false,
-                'message' => $exception->getMessage(),
-                'code' => "442"
-            ];
+public function register(DTOsRegister $registerDTO)
+{
+    try {
+        $isFirstUser = $registerDTO->getRole() === 'admin';
+        
+        // Si es primer admin, validar token
+        if ($isFirstUser) {
+            if (!$registerDTO->getAdminToken()) {
+                throw new Exception('Se requiere token de administrador para crear el primer admin');
+            }
+            
+            $adminToken = AdminToken::findValidToken($registerDTO->getAdminToken());
+            if (!$adminToken) {
+                throw new Exception('Token de administrador inválido o ya utilizado');
+            }
         }
+        
+        $user = $this->authRepository->createUser($registerDTO);
+        
+        // Marcar token como usado si es primer admin
+        if ($isFirstUser && isset($adminToken)) {
+            $adminToken->markAsUsed($user->email);
+        }
+        
+        return [
+            'success' => true,
+            'data' => [
+                'user' => $user,
+                'message' => $isFirstUser 
+                    ? 'Primer administrador creado exitosamente' 
+                    : 'Usuario creado exitosamente',
+                'is_first_admin' => $isFirstUser
+            ]
+        ];
+        
+    } catch (Exception $exception) {
+        return [
+            'success' => false,
+            'message' => $exception->getMessage()
+        ];
     }
-
+}
     public function validateRole()
     {
         if (!Gate::allows('validate-role', Auth::user())) {

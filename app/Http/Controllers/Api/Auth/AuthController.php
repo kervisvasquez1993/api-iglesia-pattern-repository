@@ -9,6 +9,7 @@ use App\DTOs\Auth\DTOsRegister;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User;
 use App\Services\Auth\AuthServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -140,14 +141,48 @@ class AuthController extends Controller
      * )
      */
 
-    public function register(RegisterRequest $request)
+ public function registerAdmin(RegisterRequest $request)
     {
-        $result = $this->authServices->register(DTOsRegister::fromRequest($request));
+        // Verificar que sea realmente el primer usuario
+        if (User::exists()) {
+            return response()->json([
+                'message' => 'El sistema ya tiene usuarios registrados. Use la ruta de registro normal.',
+                'suggestion' => 'POST /api/register con autenticación de administrador'
+            ], 400);
+        }
+
+        $result = $this->authServices->register(DTOsRegister::fromRequest($request, true));
+        
         if (!$result['success']) {
             return response()->json([
                 'error' => $result['message']
             ], 422);
         }
+        
+        return response()->json($result['data'], 201);
+    }
+
+    /**
+     * Registro protegido - Solo usuarios normales (admin autenticado)
+     */
+    public function register(RegisterRequest $request)
+    {
+        // Verificar que NO sea el primer usuario
+        if (!User::exists()) {
+            return response()->json([
+                'message' => 'Sistema sin configurar. Use la ruta de configuración inicial.',
+                'suggestion' => 'POST /api/register-admin con token de administrador'
+            ], 400);
+        }
+
+        $result = $this->authServices->register(DTOsRegister::fromRequest($request, false));
+        
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+        
         return response()->json($result['data'], 201);
     }
 }

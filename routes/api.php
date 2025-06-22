@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\AdminTokenController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Blog\BlogController;
 use App\Http\Controllers\Api\CategoryBlog\CategoryBlogController;
@@ -27,10 +28,32 @@ use Illuminate\Support\Facades\Route;
 //     Route::delete('/oauth/personal-access-tokens/{token_id}', [PersonalAccessTokenController::class, 'destroy']);
 // });
 
+Route::prefix('auth')->group(function () {
+    
+    // Obtener token de admin (solo cuando no hay usuarios)
+    Route::get('/admin-token', [AdminTokenController::class, 'getAdminToken'])
+         ->name('auth.admin-token');
+    
+    // Verificar estado del sistema
+    Route::get('/system-status', [AdminTokenController::class, 'getSystemStatus'])
+         ->name('auth.system-status');
+    
+    // Validar token específico
+    Route::post('/validate-token', [AdminTokenController::class, 'validateToken'])
+         ->name('auth.validate-token');
+});
+
 
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+// En routes/api.php
+Route::post('/register-admin', [AuthController::class, 'registerAdmin'])
+     ->name('register.admin');
+
+// Ruta protegida - Solo para usuarios normales (admin autenticado)
+Route::post('/register', [AuthController::class, 'register'])
+     ->middleware('auth:api')
+     ->name('register');
 Route::get('/me', [AuthController::class, 'me'])->name('auth')->middleware('auth:api');
 // pages 
 Route::post('pages', [PagesController::class, 'store'])->name('createPage')->middleware('auth:api');

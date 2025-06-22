@@ -16,6 +16,8 @@ use App\Interfaces\ImagesBlog\IImagesBlogServices;
 use App\Interfaces\Pages\IPageInterface;
 use App\Interfaces\Sermones\ISermonesRepository;
 use App\Interfaces\Sermones\ISermonesServices;
+use App\Interfaces\User\IUserRepository;
+use App\Interfaces\User\IUserServices;
 use App\Repository\Auth\AuthRepository;
 use App\Repository\Blogs\BlogsRespository;
 use App\Repository\CategoryBlog\CategoryBlogRepository;
@@ -23,6 +25,7 @@ use App\Repository\Evento\EventoRepository;
 use App\Repository\ImagesBlog\ImagesBlogRepository;
 use App\Repository\Pages\PagesRepository;
 use App\Repository\Sermones\SermonesRepository;
+use App\Repository\User\UserRepository;
 use App\Services\Blogs\BlogsServices;
 use App\Services\CategoryBlog\CategoryBlogServices;
 use App\Services\Components\ComponentsServices;
@@ -30,6 +33,7 @@ use App\Services\Evento\EventoServices;
 use App\Services\ImagesBlog\ImagesBlogServices;
 use App\Services\Pages\PagesServices;
 use App\Services\Sermones\SermonesServices;
+use App\Services\User\UserServices;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoriesServicesProvider extends ServiceProvider
@@ -39,6 +43,8 @@ class RepositoriesServicesProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(IUserRepository::class, UserRepository::class);
+        $this->app->bind(IUserServices::class, UserServices::class);
         $this->app->bind(ISermonesRepository::class, SermonesRepository::class);
         $this->app->bind(ISermonesServices::class, SermonesServices::class);
         $this->app->bind(IEventoRepository::class, EventoRepository::class);
