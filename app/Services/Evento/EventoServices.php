@@ -97,4 +97,22 @@ class EventoServices implements IEventoServices
             ];
         }
     }
+        public function updateEventoStatus($id, $status)
+    {
+        try {
+            $evento = $this->EventoRepository->getEventoById($id);
+            $result = $this->EventoRepository->updateEventoStatus($evento, $status);
+            
+            return [
+                'success' => true,
+                'data' => $result
+            ];
+        } catch (Exception $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
+
 }

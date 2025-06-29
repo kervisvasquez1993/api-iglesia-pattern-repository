@@ -98,4 +98,5 @@ class DTOsEvento
     {
         return $this->status;
     }
+    
 }

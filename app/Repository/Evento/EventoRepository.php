@@ -40,4 +40,10 @@ class EventoRepository implements IEventoRepository
         $Evento->delete();
         return $Evento;
     }
+        public function updateEventoStatus(Evento $evento, string $status): Evento
+    {
+        $evento->update(['status' => $status]);
+        return $evento->fresh(); // Recargar desde la base de datos
+    }
+
 }

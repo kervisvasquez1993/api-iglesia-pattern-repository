@@ -83,6 +83,11 @@ Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('deleteBlo
 
 Route::post('eventos', [EventoController::class, 'store'])->name('crearEvento')->middleware('auth:api');
 Route::get('eventos', [EventoController::class, 'index'])->name('listEventos');
+Route::get('eventos/{id}', [EventoController::class, 'show'])->name('mostrarEvento');
+Route::patch('eventos/{id}/status', [EventoController::class, 'updateStatus'])->name('actualizarStatusEvento')->middleware('auth:api');
+Route::delete('eventos/{id}', [EventoController::class, 'destroy'])->name('eliminarEvento')->middleware('auth:api');
+
+
 
 Route::post('sermones', [SermonesController::class, 'store'])->name('sermones')->middleware('auth:api');
 Route::get('sermones', [SermonesController::class, 'index'])->name('getSermones');

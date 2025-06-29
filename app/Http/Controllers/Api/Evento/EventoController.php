@@ -8,6 +8,8 @@ use App\Http\Requests\Evento\CreateEventoRequest;
 use App\Http\Requests\Evento\UpdateEventoRequest;
 use App\Services\Evento\EventoServices;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class EventoController extends Controller 
 {
@@ -87,4 +89,29 @@ class EventoController extends Controller
         }
         return response()->json($result['data'], 200);
     }
+    public function updateStatus(Request $request, string $id)
+    {
+        // Validación simple solo para status
+        $validated = $request->validate([
+            'status' => [
+                'required',
+                'string',
+                Rule::in(['ativo', 'inativo']) // Ajusta según tus valores válidos
+            ]
+        ], [
+            'status.required' => 'El status es requerido.',
+            'status.in' => 'El status debe ser ativo o inativo.'
+        ]);
+
+        $result = $this->EventoServices->updateEventoStatus($id, $validated['status']);
+        
+        if (!$result['success']) {
+            return response()->json([
+                'error' => $result['message']
+            ], 422);
+        }
+
+        return response()->json($result['data'], 200);
+    }
+
 }
